@@ -1,6 +1,8 @@
 name: Build and Release Executables
 on:
   push:
+    branches:
+      - main  # Trigger on pushes to the main branch
     tags:
       - 'v*'  # Trigger on version tags, e.g., v1.0, v2.1.0
 
