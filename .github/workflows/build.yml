@@ -1,4 +1,4 @@
-name: Build and Release Executables
+name: Build and Release Executabless
 on:
   push:
     branches:
