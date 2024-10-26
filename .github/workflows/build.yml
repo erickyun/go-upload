@@ -1,4 +1,4 @@
-name: Build and Release Executabless
+name: Build and Release Executables
 on:
   push:
     branches:
@@ -15,10 +15,10 @@ jobs:
         arch: [amd64, arm64]
     steps:
     - name: Check out repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Latest stable version
 
     - name: Set up Go
-      uses: actions/setup-go@v5  # Updated to v5
+      uses: actions/setup-go@v5  # Latest version compatible with Node.js 20
       with:
         go-version: '1.18'
     
@@ -31,7 +31,7 @@ jobs:
         fi
     
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3  # Currently latest version
+      uses: actions/upload-artifact@v3  # Latest stable version
       with:
         name: go-upload-${{ matrix.os }}-${{ matrix.arch }}
         path: go-upload-${{ matrix.os }}-${{ matrix.arch }}*
@@ -41,22 +41,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Download Windows build artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v3  # Latest stable version
       with:
         name: go-upload-windows-amd64
 
     - name: Download Linux amd64 build artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v3  # Latest stable version
       with:
         name: go-upload-linux-amd64
 
     - name: Download Linux arm64 build artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v3  # Latest stable version
       with:
         name: go-upload-linux-arm64
 
     - name: Create GitHub Release
-      uses: actions/create-release@v1
+      uses: actions/create-release@v1  # Stable version
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -66,21 +66,21 @@ jobs:
         prerelease: false
 
     - name: Upload release assets
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@v1  # Stable version
       with:
         upload_url: ${{ github.event.release.upload_url }}
         name: go-upload-windows-amd64.exe
         path: go-upload-windows-amd64.exe
 
     - name: Upload Linux amd64 release asset
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@v1  # Stable version
       with:
         upload_url: ${{ github.event.release.upload_url }}
         name: go-upload-linux-amd64
         path: go-upload-linux-amd64
 
     - name: Upload Linux arm64 release asset
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@v1  # Stable version
       with:
         upload_url: ${{ github.event.release.upload_url }}
         name: go-upload-linux-arm64
