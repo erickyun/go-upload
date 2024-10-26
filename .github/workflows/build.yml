@@ -15,12 +15,12 @@ jobs:
         arch: [amd64, arm64]
     steps:
     - name: Check out repository
-      uses: actions/checkout@v3  # Ensure you're on the latest stable version
+      uses: actions/checkout@v3  # Ensure you're using the latest stable version
 
     - name: Set up Go
-      uses: actions/setup-go@v5  # Latest version compatible with Node.js 20
+      uses: actions/setup-go@v5  # Ensure you're using the latest version compatible with Node.js 20
       with:
-        go-version: '1.18'
+        go-version: '1.17'
     
     - name: Build executable
       run: |
@@ -31,7 +31,7 @@ jobs:
         fi
     
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3  # Ensure you're on the latest stable version
+      uses: actions/upload-artifact@v4  # Update to the latest version
       with:
         name: go-upload-${{ matrix.os }}-${{ matrix.arch }}
         path: go-upload-${{ matrix.os }}-${{ matrix.arch }}*
@@ -58,7 +58,7 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Upload release assets
+    - name: Upload Windows amd64 release asset
       if: env.release_exists != '200'  # Only upload if release was created
       uses: actions/upload-release-asset@v1  # Use the stable version
       with:
