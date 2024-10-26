@@ -2,9 +2,9 @@ name: Build and Release Executables
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on pushes to the main branch
     tags:
-      - 'v*'
+      - 'v*'  # Trigger on version tags, e.g., v1.0, v2.1.0
 
 jobs:
   build:
@@ -15,10 +15,10 @@ jobs:
         arch: [amd64, arm64]
     steps:
     - name: Check out repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Ensure you're on the latest stable version
 
     - name: Set up Go
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v5  # Latest version compatible with Node.js 20
       with:
         go-version: '1.18'
     
@@ -31,7 +31,7 @@ jobs:
         fi
     
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3  # Ensure you're on the latest stable version
       with:
         name: go-upload-${{ matrix.os }}-${{ matrix.arch }}
         path: go-upload-${{ matrix.os }}-${{ matrix.arch }}*
@@ -49,7 +49,7 @@ jobs:
 
     - name: Create GitHub Release
       if: env.release_exists != '200'  # Only create if it doesn't exist
-      uses: actions/create-release@v1
+      uses: actions/create-release@v1  # Use the stable version
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -60,7 +60,7 @@ jobs:
 
     - name: Upload release assets
       if: env.release_exists != '200'  # Only upload if release was created
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@v1  # Use the stable version
       with:
         upload_url: ${{ github.event.release.upload_url }}
         name: go-upload-windows-amd64.exe
@@ -68,7 +68,7 @@ jobs:
 
     - name: Upload Linux amd64 release asset
       if: env.release_exists != '200'  # Only upload if release was created
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@v1  # Use the stable version
       with:
         upload_url: ${{ github.event.release.upload_url }}
         name: go-upload-linux-amd64
@@ -76,7 +76,7 @@ jobs:
 
     - name: Upload Linux arm64 release asset
       if: env.release_exists != '200'  # Only upload if release was created
-      uses: actions/upload-release-asset@v1
+      uses: actions/upload-release-asset@v1  # Use the stable version
       with:
         upload_url: ${{ github.event.release.upload_url }}
         name: go-upload-linux-arm64
